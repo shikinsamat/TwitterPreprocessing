@@ -1,5 +1,6 @@
 import re
 import codecs
+import csv
 
 #start process_tweet
 def processTweet(tweet):
@@ -37,21 +38,14 @@ def processTweet(tweet):
     return tweet
 #end
 
-#Read the tweets one by one and process it
-fp = codecs.open('C:/Users/shubham_15294/Desktop/Insight/Twitter Evaluation/TestDataArk.txt', encoding = 'utf-8')
-#with f = codecs.open('file.txt', encoding='utf-8'):  # GOOD--gives you Unicode
+p = codecs.open('allNew.csv', encoding = 'latin-1')
+read = csv.reader(p)
+outputFile = open('allNewProcessed.csv', 'w',newline='')
+outputWriter = csv.writer(outputFile)
+for row in read :
+    processedTweet = processTweet(row[2])
+    outputWriter.writerow([processedTweet])
 
-line = fp.readline()
-target = open('C:/Users/shubham_15294/Desktop/Insight/Twitter Evaluation/TestDataARKProcessed.txt', 'w')
-
-while line:
-    processedTweet = processTweet(line)
-    #print (processedTweet)
-    if processedTweet:
-        target.write(processedTweet + "\n")
-    #break
-    line = fp.readline()
-#end loop
+outputFile.close();
+p.close();
 print("Done !")
-fp.close()
-target.close()
